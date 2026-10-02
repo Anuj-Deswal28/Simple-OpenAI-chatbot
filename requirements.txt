@@ -26,3 +26,6 @@ numpy
 scikit-learn
 # streamlit
 streamlit
+
+# output-parser
+pydantic
