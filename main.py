@@ -1,10 +1,12 @@
-from prompt import chat_template
+from prompt import chat_template,parser
 
 from dotenv import load_dotenv
 import streamlit as st
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core import PydanticOutputParser
+from pydantic import BaseModel, Field
 
 load_dotenv()
 model = ChatOpenAI()
@@ -43,7 +45,8 @@ if st.button("Submit") and query:
         "topic": query
     })
 
-    result = model.invoke(prompt)
+    res = model.invoke(prompt)
+    result = parser.parse(res.content)
     ai_message = AIMessage(content=result.content)
     st.session_state.chat_history.append(ai_message)
 
